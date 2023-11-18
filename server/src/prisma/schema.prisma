@@ -13,4 +13,5 @@ datasource db {
 model Note {
   id        String  @id @default(cuid())
   text      String
+  userId    String
 }

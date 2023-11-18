@@ -1,12 +1,13 @@
-import { PrismaClient } from "@prisma/client";
 import { testNotes } from "./testData";
-
-const prisma = new PrismaClient();
+import { prisma } from "./db";
 
 async function main() {
   testNotes.forEach(async (note) => {
     await prisma.note.create({ data: note });
   });
+
+  // Add more test data
+
   console.log("Data added successfully!");
 }
 

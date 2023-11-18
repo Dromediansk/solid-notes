@@ -3,6 +3,6 @@ import { getAllNotes } from "./controllers";
 
 const apiRouter = Router();
 
-apiRouter.get("/", getAllNotes);
+apiRouter.get("/notes", getAllNotes);
 
 export default apiRouter;
