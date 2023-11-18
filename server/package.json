@@ -10,7 +10,10 @@
     "test": "jest --watch",
     "db:migrate": "npx prisma migrate dev --name init",
     "db:reset": "npx prisma migrate reset -f",
-    "db:seed": "npm run db:reset && npx ts-node prisma/seed.ts"
+    "db:seed": "npm run db:reset && npx ts-node src/prisma/seed.ts"
+  },
+  "prisma": {
+    "schema": "src/prisma/schema.prisma"
   },
   "keywords": [],
   "author": "",

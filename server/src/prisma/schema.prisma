@@ -11,7 +11,7 @@ datasource db {
 }
 
 model Note {
-  id        String  @id @default(cuid())
+  id        String    @id @default(uuid())
   text      String
   userId    String
 }
