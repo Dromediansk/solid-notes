@@ -26,24 +26,26 @@ const AddNoteForm: Component<AddNoteFormProps> = (props) => {
   };
 
   return (
-    <form
-      class="flex justify-center items-center gap-2 flex-col"
-      onSubmit={addNote}
-    >
-      <textarea
-        class="w-96 h-16 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md p-2 resize"
-        placeholder="Write a note"
-        onChange={handleChangeInput}
-        value={inputValue()}
-        required
-      />
-      <button
-        type="submit"
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md p-2 w-20 h-10"
+    <div class="text-center">
+      <form
+        class="inline-flex justify-center items-center p-2 gap-2 flex-col"
+        onSubmit={addNote}
       >
-        Add
-      </button>
-    </form>
+        <textarea
+          class="w-96 h-16 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md p-2 resize focus:outline-cyan-500"
+          placeholder="Write a note"
+          onChange={handleChangeInput}
+          value={inputValue()}
+          required
+        />
+        <button
+          type="submit"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md p-2 w-20 h-10"
+        >
+          Add
+        </button>
+      </form>
+    </div>
   );
 };
 

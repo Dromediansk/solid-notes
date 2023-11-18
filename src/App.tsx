@@ -16,24 +16,23 @@ const App: Component = () => {
     <main class="container p-4 mx-auto">
       <AddNoteForm setNotes={setNotes} />
 
-      <ul class="flex gap-2">
+      <ul class="flex gap-4">
         <For each={notes()}>
           {(note) => (
-            <li class="border border-gray-200 p-4 flex gap-4">
+            <li class="border border-gray-200 p-4 flex gap-4 relative shadow-xl">
               <span>{note.text}</span>
               <svg
-                fill="none"
+                class="h-5 w-5 fill-gray-100 text-gray-500 absolute -right-2 -top-2 cursor-pointer hover:fill-red-300"
                 viewBox="0 0 24 24"
-                stroke-width={1.5}
                 stroke="currentColor"
-                class="w-3 h-3 cursor-pointer"
+                stroke-width="1"
+                stroke-linecap="round"
+                stroke-linejoin="round"
                 onClick={() => removeNote(note.id)}
               >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
-                />
+                <circle cx="12" cy="12" r="10" />
+                <line x1="15" y1="9" x2="9" y2="15" />
+                <line x1="9" y1="9" x2="15" y2="15" />
               </svg>
             </li>
           )}
