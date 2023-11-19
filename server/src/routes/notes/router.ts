@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { getAllNotes } from "./controllers";
+import { getNotesByUserId } from "./controllers";
 
 const apiRouter = Router();
 
-apiRouter.get("/notes", getAllNotes);
+apiRouter.get("/notes/:userId", getNotesByUserId);
 
 export default apiRouter;
