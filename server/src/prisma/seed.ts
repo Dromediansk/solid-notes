@@ -1,12 +1,14 @@
-import { testNotes } from "./testData";
+import { testNotes, testUsers } from "./testData";
 import { prisma } from "./db";
 
 async function main() {
+  testUsers.forEach(async (user) => {
+    await prisma.user.create({ data: user });
+  });
+
   testNotes.forEach(async (note) => {
     await prisma.note.create({ data: note });
   });
-
-  // Add more test data
 
   console.log("Data added successfully!");
 }
