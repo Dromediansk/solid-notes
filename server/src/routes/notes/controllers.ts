@@ -11,13 +11,15 @@ type NoteByNoteIdParam = {
   noteId: string;
 };
 
+type BaseNote = Omit<Note, "userId">;
+
 export const getNotesByUserId = async (
   req: RequestWithQuery<NotesByUserIdParam>,
   res: Response
 ) => {
   try {
     const { params } = req;
-    const notes: Prisma.NoteCreateInput[] = await prisma.note.findMany({
+    const notes: Note[] = await prisma.note.findMany({
       where: { userId: { equals: params.userId } },
     });
     res.status(200).json({ data: notes });
@@ -28,12 +30,14 @@ export const getNotesByUserId = async (
 };
 
 export const createNewNote = async (
-  req: RequestWithBody<{}, Note>,
+  req: RequestWithBody<NotesByUserIdParam, BaseNote>,
   res: Response
 ) => {
   try {
+    const { params } = req;
+    const newNote: Note = { ...req.body, userId: params.userId };
     const note: Prisma.NoteCreateInput = await prisma.note.create({
-      data: req.body,
+      data: newNote,
     });
     res.status(201).json({ data: note });
   } catch (error) {

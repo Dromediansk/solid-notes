@@ -1,7 +1,7 @@
-import { Prisma } from "@prisma/client";
+import { Note, User } from "@prisma/client";
 import { randomUUID } from "crypto";
 
-export const testUsers: Prisma.UserCreateInput[] = [
+export const testUsers: User[] = [
   {
     id: randomUUID(),
     firstName: "Michael",
@@ -16,8 +16,12 @@ export const testUsers: Prisma.UserCreateInput[] = [
   },
 ];
 
-export const testNotes: Prisma.NoteCreateInput[] = [
-  { userId: testUsers[0].id!, text: "Testing note 1" },
-  { userId: testUsers[0].id!, text: "Lorem ipsum how are you" },
-  { userId: testUsers[1].id!, text: "Testing note 3" },
+export const testNotes: Note[] = [
+  { id: randomUUID(), userId: testUsers[0].id, text: "Testing note 1" },
+  {
+    id: randomUUID(),
+    userId: testUsers[0].id,
+    text: "Lorem ipsum how are you",
+  },
+  { id: randomUUID(), userId: testUsers[1].id, text: "Testing note 3" },
 ];
