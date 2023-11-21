@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { createNewNote, deleteNoteById, getNotesByUserId } from "./controllers";
+import { createNote, deleteNotes, getNotes } from "./controllers";
 
 const apiRouter = Router();
 
-apiRouter.post("/notes/:userId", createNewNote);
-apiRouter.get("/notes/:userId", getNotesByUserId);
-apiRouter.delete("/notes/:noteId", deleteNoteById);
+apiRouter.post("/notes", createNote);
+apiRouter.get("/notes", getNotes);
+apiRouter.delete("/notes", deleteNotes);
 
 export default apiRouter;

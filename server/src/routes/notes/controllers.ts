@@ -1,26 +1,25 @@
-import { Response } from "express";
+import { Request, Response } from "express";
 import { prisma } from "../../prisma/db";
 import { Note, Prisma } from "@prisma/client";
-import { RequestWithBody, RequestWithQuery } from "../../utils/types";
 
-type NotesByUserIdParam = {
+type UserIdQuery = {
   userId: string;
 };
 
-type NoteByNoteIdParam = {
+type UserIdNoteIdQuery = UserIdQuery & {
   noteId: string;
 };
 
 type BaseNote = Omit<Note, "userId">;
 
-export const getNotesByUserId = async (
-  req: RequestWithQuery<NotesByUserIdParam>,
+export const getNotes = async (
+  req: Request<never, unknown, never, UserIdQuery>,
   res: Response
 ) => {
   try {
-    const { params } = req;
+    const { query } = req;
     const notes: Note[] = await prisma.note.findMany({
-      where: { userId: { equals: params.userId } },
+      where: { userId: { equals: query.userId } },
     });
     res.status(200).json({ data: notes });
   } catch (error) {
@@ -29,13 +28,14 @@ export const getNotesByUserId = async (
   }
 };
 
-export const createNewNote = async (
-  req: RequestWithBody<NotesByUserIdParam, BaseNote>,
+export const createNote = async (
+  req: Request<never, unknown, BaseNote, UserIdQuery>,
   res: Response
 ) => {
   try {
-    const { params } = req;
-    const newNote: Note = { ...req.body, userId: params.userId };
+    const { query } = req;
+    const newNote: Note = { ...req.body, userId: query.userId };
+
     const note: Prisma.NoteCreateInput = await prisma.note.create({
       data: newNote,
     });
@@ -46,13 +46,14 @@ export const createNewNote = async (
   }
 };
 
-export const deleteNoteById = async (
-  req: RequestWithQuery<NoteByNoteIdParam>,
+export const deleteNotes = async (
+  req: Request<never, unknown, never, UserIdNoteIdQuery>,
   res: Response
 ) => {
   try {
-    const { noteId } = req.params;
-    await prisma.note.delete({ where: { id: noteId } });
+    const { userId, noteId } = req.query;
+
+    await prisma.note.delete({ where: { id: noteId, userId: userId } });
     res.status(201).json({ message: "Note deleted" });
   } catch (error) {
     console.error(error);
