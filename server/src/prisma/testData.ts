@@ -1,15 +1,14 @@
 import { Note, User } from "@prisma/client";
-import { randomUUID } from "crypto";
 
 export const testUsers: User[] = [
   {
-    id: randomUUID(),
+    id: "1",
     firstName: "Michael",
     lastName: "Hatay",
     email: "test@test.com",
   },
   {
-    id: randomUUID(),
+    id: "2",
     firstName: "Dohal",
     lastName: "Mitas",
     email: "test2@test.com",
@@ -17,11 +16,11 @@ export const testUsers: User[] = [
 ];
 
 export const testNotes: Note[] = [
-  { id: randomUUID(), userId: testUsers[0].id, text: "Testing note 1" },
+  { id: "1", userId: testUsers[0].id, text: "Testing note 1" },
   {
-    id: randomUUID(),
+    id: "2",
     userId: testUsers[0].id,
     text: "Lorem ipsum how are you",
   },
-  { id: randomUUID(), userId: testUsers[1].id, text: "Testing note 3" },
+  { id: "3", userId: testUsers[1].id, text: "Testing note 3" },
 ];
