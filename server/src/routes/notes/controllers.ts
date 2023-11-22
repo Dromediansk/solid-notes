@@ -1,19 +1,19 @@
 import { Request, Response } from "express";
 import { prisma } from "../../prisma/db";
-import { Note, Prisma } from "@prisma/client";
+import { Note } from "@prisma/client";
 
-type UserIdQuery = {
+type UserIdRequestQuery = {
   userId: string;
 };
 
-type UserIdNoteIdQuery = UserIdQuery & {
-  noteId: string;
+type NoteIdsRequestQuery = UserIdRequestQuery & {
+  noteIds: string[];
 };
 
 type BaseNote = Omit<Note, "userId">;
 
 export const getNotes = async (
-  req: Request<never, unknown, never, UserIdQuery>,
+  req: Request<never, unknown, never, UserIdRequestQuery>,
   res: Response
 ) => {
   try {
@@ -29,14 +29,14 @@ export const getNotes = async (
 };
 
 export const createNote = async (
-  req: Request<never, unknown, BaseNote, UserIdQuery>,
+  req: Request<never, unknown, BaseNote, UserIdRequestQuery>,
   res: Response
 ) => {
   try {
     const { query } = req;
     const newNote: Note = { ...req.body, userId: query.userId };
 
-    const note: Prisma.NoteCreateInput = await prisma.note.create({
+    const note: Note = await prisma.note.create({
       data: newNote,
     });
     res.status(201).json({ data: note });
@@ -47,16 +47,18 @@ export const createNote = async (
 };
 
 export const deleteNotes = async (
-  req: Request<never, unknown, never, UserIdNoteIdQuery>,
+  req: Request<never, unknown, never, NoteIdsRequestQuery>,
   res: Response
 ) => {
   try {
-    const { userId, noteId } = req.query;
+    const { userId, noteIds } = req.query;
 
-    await prisma.note.delete({ where: { id: noteId, userId: userId } });
-    res.status(201).json({ message: "Note deleted" });
+    await prisma.note.deleteMany({
+      where: { userId, id: { in: noteIds.map((id) => id) } },
+    });
+    res.status(201).json({ message: "Notes deleted" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Unable to delete note" });
+    res.status(500).json({ message: "Unable to delete notes" });
   }
 };
