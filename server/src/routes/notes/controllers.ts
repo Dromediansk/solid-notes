@@ -2,18 +2,24 @@ import { Request, Response } from "express";
 import { prisma } from "../../prisma/db";
 import { Note } from "@prisma/client";
 
-type UserIdRequestQuery = {
+type UpsertNoteRequestQuery = {
+  userId: string;
+  noteId?: string;
+};
+
+type GetNotesRequestQuery = {
   userId: string;
 };
 
-type NoteIdsRequestQuery = UserIdRequestQuery & {
+type NoteIdsRequestQuery = {
+  userId: string;
   noteIds: string[];
 };
 
 type BaseNote = Omit<Note, "userId">;
 
 export const getNotes = async (
-  req: Request<never, unknown, never, UserIdRequestQuery>,
+  req: Request<never, unknown, never, GetNotesRequestQuery>,
   res: Response
 ) => {
   try {
@@ -28,16 +34,18 @@ export const getNotes = async (
   }
 };
 
-export const createNote = async (
-  req: Request<never, unknown, BaseNote, UserIdRequestQuery>,
+export const upsertNote = async (
+  req: Request<never, unknown, BaseNote, UpsertNoteRequestQuery>,
   res: Response
 ) => {
   try {
     const { query } = req;
     const newNote: Note = { ...req.body, userId: query.userId };
 
-    const note: Note = await prisma.note.create({
-      data: newNote,
+    const note: Note = await prisma.note.upsert({
+      where: { id: query.noteId },
+      update: newNote,
+      create: newNote,
     });
     res.status(201).json({ data: note });
   } catch (error) {
