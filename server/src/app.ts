@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import morgan from "morgan";
 import cors from "cors";
 import passport from "passport";
@@ -30,6 +30,7 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    cookie: { maxAge: 86400000 }, // 1 day
   })
 );
 
