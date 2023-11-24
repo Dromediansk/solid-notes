@@ -42,8 +42,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/auth", authRouter);
 app.use("/api", isAuthenticated, apiRouter);
 
-app.get("/", isAuthenticated, (req: Request, res: Response) => {
-  res.status(200).json({ message: "Hello World" });
+app.get("/", (req, res) => {
+  res.send(req.isAuthenticated() ? "Logged in" : "Not logged in");
 });
 
 app.use("/*", handleNotFoundError);

@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import passport from "passport";
 import { AUTH_STRATEGY } from "./types";
 
@@ -20,11 +20,11 @@ export const redirectToGoogleLogin = passport.authenticate(
   { scope: ["profile", "email"] }
 );
 
-export const logout = (req: Request, res: Response) => {
-  //Removes req.user and clears any logged in session
-  req.logout({ keepSessionInfo: false }, (err) => {
-    console.log("Error on logout: ", err);
-    res.status(500).json({ message: "Something went wrong when logging out!" });
+export const logout = (req: Request, res: Response, next: NextFunction) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
   });
-  res.status(200).json({ message: "Logged out successfully!" });
 };
