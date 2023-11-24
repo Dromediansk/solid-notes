@@ -6,12 +6,14 @@ export const testUsers: User[] = [
     firstName: "Michael",
     lastName: "Hatay",
     email: "test@test.com",
+    googleId: "123",
   },
   {
     id: "2",
     firstName: "Dohal",
     lastName: "Mitas",
     email: "test2@test.com",
+    googleId: "223",
   },
 ];
 
