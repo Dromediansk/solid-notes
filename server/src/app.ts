@@ -17,11 +17,7 @@ const app = express();
 
 app.use(morgan("combined"));
 
-app.use(
-  cors({
-    origin: "http://localhost:3000",
-  })
-);
+app.use(cors());
 
 app.use(helmet());
 
@@ -43,8 +39,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/auth", authRouter);
 app.use("/api", isAuthenticated, apiRouter);
 
-app.get("/", (req, res) => {
-  res.send(req.isAuthenticated() ? "Logged in" : "Not logged in");
+app.get("/", isAuthenticated, (req, res) => {
+  res.redirect("http://localhost:3000/");
 });
 
 app.use("/*", handleNotFoundError);

@@ -1,6 +1,7 @@
 /* @refresh reload */
 import "./index.css";
 import { render } from "solid-js/web";
+import { lazy } from "solid-js";
 
 import App from "./App";
 

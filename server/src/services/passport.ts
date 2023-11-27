@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import passport from "passport";
 import {
-  Strategy,
   StrategyOptions,
   Profile,
   VerifyCallback,
@@ -62,7 +61,7 @@ export const isAuthenticated = (
   next: NextFunction
 ) => {
   console.log("current user is: ", req.user);
-  const isLoggedIn = req.isAuthenticated() && req.user;
+  const isLoggedIn = req.isAuthenticated() && req.user
 
   if (!isLoggedIn) {
     return res.status(401).json({

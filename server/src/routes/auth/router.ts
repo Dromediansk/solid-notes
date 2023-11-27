@@ -2,7 +2,6 @@ import { Router } from "express";
 import {
   authWithGoogle,
   redirectToGoogleLogin,
-  handleGoogleCallbackSuccess,
   loginFailed,
   logout,
 } from "./controllers";
@@ -10,7 +9,7 @@ import {
 const authRouter = Router();
 
 authRouter.get("/google", redirectToGoogleLogin);
-authRouter.get("/google/callback", authWithGoogle, handleGoogleCallbackSuccess);
+authRouter.get("/google/callback", authWithGoogle);
 authRouter.get("/failure", loginFailed);
 authRouter.get("/logout", logout);
 

@@ -1,31 +1,34 @@
-import { Request, Response } from "express";
+import { Response, Request } from "express";
 import { prisma } from "../../prisma/db";
 import { Note } from "@prisma/client";
-
-type UpsertNoteRequestQuery = {
-  userId: string;
-  noteId?: string;
-};
 
 type GetNotesRequestQuery = {
   userId: string;
 };
 
-type NoteIdsRequestQuery = {
-  userId: string;
-  noteIds: string[];
+type BaseNote = Omit<Note, "userId">;
+
+type UpsertNoteRequestQuery = {
+  noteId?: string;
 };
 
-type BaseNote = Omit<Note, "userId">;
+type NoteIdsRequestQuery = {
+  noteIds: string[];
+};
 
 export const getNotes = async (
   req: Request<never, unknown, never, GetNotesRequestQuery>,
   res: Response
 ) => {
   try {
-    const { query } = req;
+    const { user } = req;
+
+    if (!user) {
+      throw new Error("You must be logged in!");
+    }
+
     const notes: Note[] = await prisma.note.findMany({
-      where: { userId: { equals: query.userId } },
+      where: { userId: user.id },
     });
     res.status(200).json({ data: notes });
   } catch (error) {
@@ -39,8 +42,13 @@ export const upsertNote = async (
   res: Response
 ) => {
   try {
-    const { query } = req;
-    const newNote: Note = { ...req.body, userId: query.userId };
+    const { query, user } = req;
+
+    if (!user) {
+      throw new Error("You must be logged in!");
+    }
+
+    const newNote: Note = { ...req.body, userId: user.id };
 
     const note: Note = await prisma.note.upsert({
       where: { id: query.noteId },
@@ -59,10 +67,15 @@ export const deleteNotes = async (
   res: Response
 ) => {
   try {
-    const { userId, noteIds } = req.query;
+    const { noteIds } = req.query;
+    const { user } = req;
+
+    if (!user) {
+      throw new Error("You must be logged in!");
+    }
 
     await prisma.note.deleteMany({
-      where: { userId, id: { in: noteIds.map((id) => id) } },
+      where: { userId: user.id, id: { in: noteIds.map((id) => id) } },
     });
     res.status(201).json({ message: "Notes deleted" });
   } catch (error) {
