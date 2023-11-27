@@ -25,6 +25,17 @@ export const logout = (req: Request, res: Response, next: NextFunction) => {
     if (err) {
       return next(err);
     }
-    res.redirect("/");
+    res.status(200).json({ message: "Logout successful!" });
   });
+};
+
+export const getAuthStatus = async (req: Request, res: Response) => {
+  try {
+    const isLoggedIn = req.user && req.isAuthenticated();
+    const user = req.user ? req.user : null;
+    res.status(200).json({ isAuthenticated: isLoggedIn, user });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Unable to check auth status" });
+  }
 };

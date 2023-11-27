@@ -17,7 +17,14 @@ const app = express();
 
 app.use(morgan("combined"));
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true,
+    optionsSuccessStatus: 204,
+  })
+);
 
 app.use(helmet());
 
