@@ -28,7 +28,7 @@ const HomePage: Component = () => {
         <For each={notes()}>
           {(note) => (
             <li class="border border-gray-200 p-4 flex gap-4 relative shadow-xl">
-              <span>{note.text}</span>
+              <span class="w-44 text-center">{note.text}</span>
               <svg
                 class="h-5 w-5 fill-gray-100 text-gray-500 absolute -right-2 -top-2 cursor-pointer hover:fill-red-300"
                 viewBox="0 0 24 24"

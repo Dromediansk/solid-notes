@@ -1,4 +1,4 @@
-import { Component, JSX, Setter, createSignal, createUniqueId } from "solid-js";
+import { Component, JSX, Setter, createSignal } from "solid-js";
 import { Note } from "../types";
 import { createNote } from "../services/note";
 
