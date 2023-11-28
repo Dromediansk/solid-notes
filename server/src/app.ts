@@ -19,7 +19,7 @@ app.use(morgan("combined"));
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: process.env.CLIENT_ORIGIN,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
     optionsSuccessStatus: 204,
@@ -45,10 +45,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/auth", authRouter);
 app.use("/api", isAuthenticated, apiRouter);
-
-app.get("/", isAuthenticated, (req, res) => {
-  res.redirect("http://localhost:3000/");
-});
 
 app.use("/*", handleNotFoundError);
 app.use(handleGeneralError);
