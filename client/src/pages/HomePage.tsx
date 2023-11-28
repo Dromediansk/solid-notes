@@ -1,11 +1,19 @@
-import { createSignal, type Component, For } from "solid-js";
+import { createSignal, type Component, For, createEffect } from "solid-js";
 import { Note } from "../types";
 import AddNoteForm from "../components/AddNoteForm";
+import { deleteNote, fetchNotes } from "../services/note";
 
 const HomePage: Component = () => {
   const [notes, setNotes] = createSignal<Note[]>([]);
 
-  const removeNote = (noteId: string) => {
+  createEffect(async () => {
+    const response = await fetchNotes();
+    setNotes(response.data);
+  });
+
+  const removeNote = async (noteId: string) => {
+    await deleteNote(noteId);
+
     const newNotes = [...notes()];
     const noteIndex = newNotes.findIndex((note) => note.id === noteId);
     newNotes.splice(noteIndex, 1);

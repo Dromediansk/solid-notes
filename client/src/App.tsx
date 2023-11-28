@@ -5,15 +5,14 @@ import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/Navbar";
-import { setUser } from "./auth/store";
-import { fetchAuthStatus } from "./auth/service";
+import { fetchAuthStatus } from "./services/auth";
+import { setUser } from "./stores/user";
 
 const App: Component = () => {
   const [data] = createResource(fetchAuthStatus);
 
   createEffect(() => {
     if (!data.loading && data().user) {
-      console.log(data().user);
       setUser(data().user);
     }
   });

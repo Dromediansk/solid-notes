@@ -1,6 +1,6 @@
 import { Route, useNavigate } from "@solidjs/router";
 import { Component, createEffect } from "solid-js";
-import { user } from "../auth/store";
+import { user } from "../stores/user";
 
 type ProtectedRouteProps = {
   component: Component;

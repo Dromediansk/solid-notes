@@ -8,12 +8,8 @@ type GetNotesRequestQuery = {
 
 type BaseNote = Omit<Note, "userId">;
 
-type UpsertNoteRequestQuery = {
-  noteId?: string;
-};
-
 type NoteIdsRequestQuery = {
-  noteIds: string[];
+  noteId: string;
 };
 
 export const getNotes = async (
@@ -38,20 +34,20 @@ export const getNotes = async (
 };
 
 export const upsertNote = async (
-  req: Request<never, unknown, BaseNote, UpsertNoteRequestQuery>,
+  req: Request<never, unknown, BaseNote>,
   res: Response
 ) => {
   try {
-    const { query, user } = req;
+    const { user, body } = req;
 
     if (!user) {
       throw new Error("You must be logged in!");
     }
 
-    const newNote: Note = { ...req.body, userId: user.id };
+    const newNote: Note = { ...body, userId: user.id };
 
     const note: Note = await prisma.note.upsert({
-      where: { id: query.noteId },
+      where: { id: body.id || "" },
       update: newNote,
       create: newNote,
     });
@@ -62,22 +58,24 @@ export const upsertNote = async (
   }
 };
 
-export const deleteNotes = async (
+export const deleteNote = async (
   req: Request<never, unknown, never, NoteIdsRequestQuery>,
   res: Response
 ) => {
   try {
-    const { noteIds } = req.query;
+    const { noteId } = req.query;
     const { user } = req;
 
     if (!user) {
       throw new Error("You must be logged in!");
     }
 
-    await prisma.note.deleteMany({
-      where: { userId: user.id, id: { in: noteIds.map((id) => id) } },
+    console.log("noteId", noteId);
+
+    await prisma.note.delete({
+      where: { id: noteId },
     });
-    res.status(201).json({ message: "Notes deleted" });
+    res.status(201).json({ message: "Note deleted" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Unable to delete notes" });
