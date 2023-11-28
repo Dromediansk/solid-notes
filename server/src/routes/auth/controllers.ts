@@ -27,11 +27,12 @@ export const redirectToGoogleLogin = passport.authenticate(
 );
 
 export const logout = (req: Request, res: Response, next: NextFunction) => {
+  res.clearCookie("connect.sid");
   req.logout((err) => {
-    if (err) {
-      return next(err);
-    }
-    res.redirect(`${process.env.CLIENT_ORIGIN}/login`);
+    console.log(err);
+    req.session.destroy(() => {
+      res.redirect(`${process.env.CLIENT_ORIGIN}/login`);
+    });
   });
 };
 
