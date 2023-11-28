@@ -1,4 +1,4 @@
-import { user } from "../store";
+import { user } from "../auth/store";
 
 const Navbar = () => {
   return (
