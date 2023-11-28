@@ -2,16 +2,12 @@ import express from "express";
 import morgan from "morgan";
 import cors from "cors";
 import passport from "passport";
-import session from "express-session";
 import apiRouter from "./routes/notes/router";
 import { handleGeneralError, handleNotFoundError } from "./utils/error";
 import helmet from "helmet";
 import authRouter from "./routes/auth/router";
 import { isAuthenticated } from "./services/passport";
-
-if (!process.env.SESSION_SECRET) {
-  throw new Error("Environment variable secret is missing!");
-}
+import { session } from "./services/redis";
 
 const app = express();
 
@@ -28,14 +24,7 @@ app.use(
 
 app.use(helmet());
 
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    cookie: { maxAge: 86400000 }, // 1 day
-  })
-);
+app.use(session);
 
 app.use(passport.initialize());
 app.use(passport.session());
