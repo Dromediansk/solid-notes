@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@solidjs/router": "^0.9.1",
+    "dayjs": "^1.11.10",
     "solid-js": "^1.8.6"
   }
 }

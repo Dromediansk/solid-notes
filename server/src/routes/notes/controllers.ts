@@ -25,6 +25,7 @@ export const getNotes = async (
 
     const notes: Note[] = await prisma.note.findMany({
       where: { userId: user.id },
+      orderBy: { createdAt: "asc" },
     });
     res.status(200).json({ data: notes });
   } catch (error) {
