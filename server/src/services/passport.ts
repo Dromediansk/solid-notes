@@ -60,7 +60,6 @@ export const isAuthenticated = (
   res: Response,
   next: NextFunction
 ) => {
-  console.log("current user is: ", req.user);
   const isLoggedIn = req.isAuthenticated() && req.user
 
   if (!isLoggedIn) {
