@@ -2,6 +2,11 @@ type CreateNoteBody = {
   text: string;
 };
 
+type UpdateNoteBody = {
+  id: string;
+  text: string;
+};
+
 export const fetchNotes = async () => {
   try {
     const response = await fetch(
@@ -28,6 +33,23 @@ export const createNote = async (body: CreateNoteBody) => {
     return await response.json();
   } catch (error) {
     console.error("Error creating note: ", error);
+  }
+};
+
+export const udpateNote = async (body: UpdateNoteBody) => {
+  try {
+    const response = await fetch(
+      `${import.meta.env.VITE_SERVER_HOST}/api/notes`,
+      {
+        credentials: "include",
+        method: "post",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      }
+    );
+    return await response.json();
+  } catch (error) {
+    console.error("Error updating note: ", error);
   }
 };
 

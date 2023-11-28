@@ -29,11 +29,11 @@ const AddNoteForm: Component<AddNoteFormProps> = (props) => {
   return (
     <div class="text-center">
       <form
-        class="inline-flex justify-center items-center p-2 gap-2 flex-col"
+        class="inline-flex justify-center items-center border-2 border-gray-200 shadow-md p-4 gap-2 flex-col rounded"
         onSubmit={addNote}
       >
         <textarea
-          class="w-96 h-16 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md p-2 resize focus:outline-cyan-500"
+          class="w-96 h-24 bg-gray-50 text-gray-900 text-sm rounded-md p-2 resize focus:outline-cyan-500"
           placeholder="Write a note"
           onChange={handleChangeInput}
           value={inputValue()}
