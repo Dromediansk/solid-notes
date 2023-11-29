@@ -10,7 +10,7 @@ import { User } from "@prisma/client";
 
 if (!process.env.CLIENT_ID || !process.env.CLIENT_SECRET) {
   throw new Error(
-    "Environemnt variables CLIENT_ID or CLIENT_SERVER are missing!"
+    "Environment variables CLIENT_ID or CLIENT_SERVER are missing!"
   );
 }
 
@@ -60,7 +60,7 @@ export const isAuthenticated = (
   res: Response,
   next: NextFunction
 ) => {
-  const isLoggedIn = req.isAuthenticated() && req.user
+  const isLoggedIn = req.isAuthenticated() && req.user;
 
   if (!isLoggedIn) {
     return res.status(401).json({
