@@ -1,6 +1,6 @@
 import { Component, JSX, Setter, createSignal } from "solid-js";
 import { Note } from "../types";
-import { createNote } from "../services/note";
+import { upsertNote } from "../services/note";
 
 type AddNoteFormProps = {
   setNotes: Setter<Note[]>;
@@ -20,7 +20,7 @@ const AddNoteForm: Component<AddNoteFormProps> = (props) => {
     event.preventDefault();
 
     const newNote = { text: inputValue() };
-    const response = await createNote(newNote);
+    const response = await upsertNote(newNote);
 
     setNotes((prevState) => [...prevState, response.data]);
     setInputValue("");

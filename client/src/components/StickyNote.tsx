@@ -1,7 +1,7 @@
 import { Component, createSignal, onMount } from "solid-js";
 import { Note } from "../types";
 import dayjs from "dayjs";
-import { udpateNote } from "../services/note";
+import { upsertNote } from "../services/note";
 
 type StickyNoteProps = {
   note: Note;
@@ -18,7 +18,7 @@ const StickyNote: Component<StickyNoteProps> = (props) => {
   const datetime = dayjs(note.createdAt).format("DD. MMM YYYY: hh:mm");
 
   const handleUpdateNote = async () => {
-    await udpateNote({ id: note.id, text: inputValue() });
+    await upsertNote({ id: note.id, text: inputValue() });
     setNoteText(inputValue);
   };
 

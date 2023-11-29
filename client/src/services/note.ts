@@ -1,12 +1,7 @@
-type CreateNoteBody = {
+type UpsertNoteBody = {
+  id?: string;
   text: string;
 };
-
-type UpdateNoteBody = {
-  id: string;
-  text: string;
-};
-
 export const fetchNotes = async () => {
   try {
     const response = await fetch(
@@ -19,7 +14,7 @@ export const fetchNotes = async () => {
   }
 };
 
-export const createNote = async (body: CreateNoteBody) => {
+export const upsertNote = async (body: UpsertNoteBody) => {
   try {
     const response = await fetch(
       `${import.meta.env.VITE_SERVER_HOST}/api/notes`,
@@ -33,23 +28,6 @@ export const createNote = async (body: CreateNoteBody) => {
     return await response.json();
   } catch (error) {
     console.error("Error creating note: ", error);
-  }
-};
-
-export const udpateNote = async (body: UpdateNoteBody) => {
-  try {
-    const response = await fetch(
-      `${import.meta.env.VITE_SERVER_HOST}/api/notes`,
-      {
-        credentials: "include",
-        method: "post",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      }
-    );
-    return await response.json();
-  } catch (error) {
-    console.error("Error updating note: ", error);
   }
 };
 
