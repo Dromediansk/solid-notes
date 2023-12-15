@@ -11,6 +11,9 @@ type NoteGroupProps = {
 const NoteGroup: Component<NoteGroupProps> = (props) => {
   const { date, notes } = props;
 
+  if (notes.length === 0) {
+    return null;
+  }
   return (
     <div class="p-2 border rounded shadow-sm">
       <h2 class="text-center p-2">{dayjs(date).format("DD. MMM YYYY")}</h2>

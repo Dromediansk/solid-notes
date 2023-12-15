@@ -1,7 +1,6 @@
-import { JSX, createSignal, createUniqueId } from "solid-js";
+import { JSX, createSignal } from "solid-js";
 import { upsertNote } from "../services/note";
 import { addNote } from "../stores/notes";
-import { Note } from "../types";
 
 const AddNoteForm = () => {
   const [inputValue, setInputValue] = createSignal("");
@@ -15,14 +14,8 @@ const AddNoteForm = () => {
   const handleAddNote = async (event: Event) => {
     event.preventDefault();
 
-    const newNote: Note = {
-      id: createUniqueId(),
-      createdAt: new Date(),
-      text: inputValue(),
-    };
-    await upsertNote({ text: newNote.text });
-
-    addNote(newNote);
+    const response = await upsertNote({ text: inputValue() });
+    addNote(response.data);
     setInputValue("");
   };
 

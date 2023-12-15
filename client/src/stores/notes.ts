@@ -13,8 +13,12 @@ export const addNote = (note: Note) => {
   }));
 };
 
-export const removeNote = (date: string, id: string) => {
-  const notes = groupedNotes()[date].filter((note) => note.id !== id);
-  
-  setGroupedNotes((groupedNotes) => ({ ...groupedNotes, [date]: notes }));
+export const removeNote = (date: Date, id: string) => {
+  const formattedDate = dayjs(date).format("YYYY-MM-DD");
+  const notes = groupedNotes()[formattedDate].filter((note) => note.id !== id);
+
+  setGroupedNotes((groupedNotes) => ({
+    ...groupedNotes,
+    [formattedDate]: notes,
+  }));
 };

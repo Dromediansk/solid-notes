@@ -1,4 +1,4 @@
-import { type Component, For, createEffect } from "solid-js";
+import { For, createEffect } from "solid-js";
 import { Note, NoteByDate } from "../types";
 import AddNoteForm from "../components/AddNoteForm";
 import { fetchNotes } from "../services/note";
@@ -20,7 +20,7 @@ const groupNotesByDate = (notes: Note[]) => {
   return groupedNotes;
 };
 
-const HomePage: Component = () => {
+const HomePage = () => {
   createEffect(async () => {
     const response = await fetchNotes();
     const groupedNotes = groupNotesByDate(response.data);

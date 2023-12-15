@@ -1,6 +1,5 @@
 import { Component, createSignal } from "solid-js";
 import { Note } from "../types";
-import dayjs from "dayjs";
 import { deleteNote, upsertNote } from "../services/note";
 import { removeNote } from "../stores/notes";
 
@@ -16,13 +15,19 @@ const StickyNote: Component<StickyNoteProps> = (props) => {
   const [noteText, setNoteText] = createSignal(note.text);
 
   const handleUpdateNote = async () => {
-    await upsertNote({ id: note.id, text: inputValue() });
+    if (!inputValue()) {
+      await deleteNote(note.id);
+      removeNote(note.createdAt, note.id);
+    } else {
+      await upsertNote({ id: note.id, text: inputValue() });
+    }
+
     setNoteText(inputValue);
   };
 
   const handleRemoveNote = async () => {
     await deleteNote(note.id);
-    removeNote(dayjs(note.createdAt).format("YYYY-MM-DD"), note.id);
+    removeNote(note.createdAt, note.id);
   };
 
   return (
