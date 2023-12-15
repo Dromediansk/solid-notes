@@ -1,29 +1,32 @@
-import { Component, createSignal, onMount } from "solid-js";
+import { Component, createSignal } from "solid-js";
 import { Note } from "../types";
 import dayjs from "dayjs";
-import { upsertNote } from "../services/note";
+import { deleteNote, upsertNote } from "../services/note";
+import { removeNote } from "../stores/notes";
 
 type StickyNoteProps = {
   note: Note;
-  onRemove: (noteId: string) => void;
 };
 
 const StickyNote: Component<StickyNoteProps> = (props) => {
-  const { note, onRemove } = props;
+  const { note } = props;
 
   const [editMode, setEditMode] = createSignal(false);
   const [inputValue, setInputValue] = createSignal(note.text);
   const [noteText, setNoteText] = createSignal(note.text);
-
-  const datetime = dayjs(note.createdAt).format("DD. MMM YYYY: hh:mm");
 
   const handleUpdateNote = async () => {
     await upsertNote({ id: note.id, text: inputValue() });
     setNoteText(inputValue);
   };
 
+  const handleRemoveNote = async () => {
+    await deleteNote(note.id);
+    removeNote(dayjs(note.createdAt).format("YYYY-MM-DD"), note.id);
+  };
+
   return (
-    <li class="border border-gray-200 flex gap-4 relative shadow-xl rounded">
+    <li class="border border-gray-200 flex gap-4 relative shadow-sm rounded flex-auto">
       <div class="flex flex-col px-2">
         <div
           class="w-44 text-center p-4"
@@ -44,7 +47,6 @@ const StickyNote: Component<StickyNoteProps> = (props) => {
             <span>{noteText()}</span>
           )}
         </div>
-        <footer class="text-sm text-gray-400 text-right">{datetime}</footer>
       </div>
       <svg
         class="h-5 w-5 fill-gray-100 text-gray-500 absolute -right-2 -top-2 cursor-pointer hover:fill-red-300"
@@ -53,7 +55,7 @@ const StickyNote: Component<StickyNoteProps> = (props) => {
         stroke-width="1"
         stroke-linecap="round"
         stroke-linejoin="round"
-        onClick={() => onRemove(note.id)}
+        onClick={handleRemoveNote}
       >
         <circle cx="12" cy="12" r="10" />
         <line x1="15" y1="9" x2="9" y2="15" />

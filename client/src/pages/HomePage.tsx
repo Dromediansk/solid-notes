@@ -1,33 +1,39 @@
-import { createSignal, type Component, For, createEffect } from "solid-js";
-import { Note } from "../types";
+import { type Component, For, createEffect } from "solid-js";
+import { Note, NoteByDate } from "../types";
 import AddNoteForm from "../components/AddNoteForm";
-import { deleteNote, fetchNotes } from "../services/note";
-import StickyNote from "../components/StickyNote";
+import { fetchNotes } from "../services/note";
+import dayjs from "dayjs";
+import NoteGroup from "../components/NoteGroup";
+import { groupedNotes, setGroupedNotes } from "../stores/notes";
 
-const HomePage: Component = () => {
-  const [notes, setNotes] = createSignal<Note[]>([]);
+const groupNotesByDate = (notes: Note[]) => {
+  const groupedNotes: NoteByDate = {};
 
-  createEffect(async () => {
-    const response = await fetchNotes();
-    setNotes(response.data);
+  notes.forEach((note) => {
+    const date = dayjs(note.createdAt).format("YYYY-MM-DD");
+    if (!groupedNotes[date]) {
+      groupedNotes[date] = [];
+    }
+    groupedNotes[date].push(note);
   });
 
-  const handleRemoveNote = async (noteId: string) => {
-    await deleteNote(noteId);
+  return groupedNotes;
+};
 
-    const newNotes = [...notes()];
-    const noteIndex = newNotes.findIndex((note) => note.id === noteId);
-    newNotes.splice(noteIndex, 1);
-    setNotes(newNotes);
-  };
+const HomePage: Component = () => {
+  createEffect(async () => {
+    const response = await fetchNotes();
+    const groupedNotes = groupNotesByDate(response.data);
+    setGroupedNotes(groupedNotes);
+  });
 
   return (
     <main class="container p-4 mx-auto">
-      <AddNoteForm setNotes={setNotes} />
+      <AddNoteForm />
 
       <ul class="flex flex-wrap justify-center gap-8 py-6">
-        <For each={notes()}>
-          {(note) => <StickyNote note={note} onRemove={handleRemoveNote} />}
+        <For each={Object.entries(groupedNotes())}>
+          {([date, notes]) => <NoteGroup date={date} notes={notes} />}
         </For>
       </ul>
     </main>

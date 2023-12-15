@@ -1,7 +1,7 @@
 export type Note = {
   id: string;
   text: string;
-  createdAt: Date
+  createdAt: Date;
 };
 
 export type User = {
@@ -10,3 +10,5 @@ export type User = {
   lastName?: string;
   email: string;
 };
+
+export type NoteByDate = { [key: string]: Note[] };

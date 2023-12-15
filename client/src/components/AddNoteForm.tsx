@@ -1,13 +1,9 @@
-import { Component, JSX, Setter, createSignal } from "solid-js";
-import { Note } from "../types";
+import { JSX, createSignal, createUniqueId } from "solid-js";
 import { upsertNote } from "../services/note";
+import { addNote } from "../stores/notes";
+import { Note } from "../types";
 
-type AddNoteFormProps = {
-  setNotes: Setter<Note[]>;
-};
-
-const AddNoteForm: Component<AddNoteFormProps> = (props) => {
-  const { setNotes } = props;
+const AddNoteForm = () => {
   const [inputValue, setInputValue] = createSignal("");
 
   const handleChangeInput: JSX.EventHandler<HTMLTextAreaElement, Event> = (
@@ -16,13 +12,17 @@ const AddNoteForm: Component<AddNoteFormProps> = (props) => {
     setInputValue(event.currentTarget.value);
   };
 
-  const addNote = async (event: Event) => {
+  const handleAddNote = async (event: Event) => {
     event.preventDefault();
 
-    const newNote = { text: inputValue() };
-    const response = await upsertNote(newNote);
+    const newNote: Note = {
+      id: createUniqueId(),
+      createdAt: new Date(),
+      text: inputValue(),
+    };
+    await upsertNote({ text: newNote.text });
 
-    setNotes((prevState) => [...prevState, response.data]);
+    addNote(newNote);
     setInputValue("");
   };
 
@@ -30,7 +30,7 @@ const AddNoteForm: Component<AddNoteFormProps> = (props) => {
     <div class="text-center">
       <form
         class="inline-flex justify-center items-center border-2 border-gray-200 shadow-md p-4 gap-2 flex-col rounded"
-        onSubmit={addNote}
+        onSubmit={handleAddNote}
       >
         <textarea
           class="w-96 h-24 bg-gray-50 text-gray-900 text-sm rounded-md p-2 resize focus:outline-cyan-500"

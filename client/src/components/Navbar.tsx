@@ -4,7 +4,7 @@ const Navbar = () => {
   return (
     <nav class="bg-gray-800 p-4">
       <div class="container mx-auto flex justify-between items-center">
-        <div class="text-white font-bold text-xl">Your Logo</div>
+        <div class="text-white font-bold text-xl">Solid Notes</div>
 
         {user() && (
           <form
