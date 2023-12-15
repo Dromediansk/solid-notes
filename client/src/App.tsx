@@ -1,12 +1,19 @@
-import { createResource, type Component, createEffect, Show } from "solid-js";
-import { Router, Routes, Route } from "@solidjs/router";
+import {
+  createResource,
+  type Component,
+  createEffect,
+  Show,
+  lazy,
+} from "solid-js";
+import { Route, Router, Routes } from "@solidjs/router";
 
 import LoginPage from "./pages/LoginPage";
-import HomePage from "./pages/HomePage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/Navbar";
 import { fetchAuthStatus } from "./services/auth";
 import { setUser } from "./stores/user";
+
+const HomePage = lazy(() => import("./pages/HomePage"));
 
 const App: Component = () => {
   const [data] = createResource(fetchAuthStatus);
