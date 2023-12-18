@@ -6,8 +6,7 @@ if (!process.env.SESSION_SECRET) {
   throw new Error("Environment variable secret is missing!");
 }
 
-const redisClient = createClient();
-redisClient.connect().catch(console.error);
+export const redisClient = createClient();
 
 export const redisStore = new RedisStore({
   client: redisClient,
