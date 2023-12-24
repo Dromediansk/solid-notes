@@ -71,8 +71,6 @@ export const deleteNote = async (
       throw new Error("You must be logged in!");
     }
 
-    console.log("noteId", noteId);
-
     await prisma.note.delete({
       where: { id: noteId },
     });

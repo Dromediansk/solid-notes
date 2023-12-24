@@ -10,7 +10,7 @@ type UserForClient = Pick<
 
 export const authWithGoogle = passport.authenticate(AUTH_STRATEGY.Google, {
   failureRedirect: "/failure",
-  successRedirect: `${process.env.CLIENT_ORIGIN}/`,
+  successRedirect: `${process.env.CLIENT_ORIGIN}/home`,
 });
 
 export const handleGoogleCallbackSuccess = (req: Request, res: Response) => {

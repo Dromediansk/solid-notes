@@ -8,10 +8,11 @@ import {
 import { Route, Router, Routes } from "@solidjs/router";
 
 import LoginPage from "./pages/LoginPage";
-import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/Navbar";
 import { fetchAuthStatus } from "./services/auth";
 import { setUser } from "./stores/user";
+import RegisterPage from "./pages/RegisterPage";
+import RouteGuard from "./components/RouteGuard";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 
@@ -38,7 +39,11 @@ const App: Component = () => {
         >
           <Routes>
             <Route path="/login" component={LoginPage} />
-            <ProtectedRoute path="/" component={HomePage} />
+            <Route path="/register" component={RegisterPage} />
+            <Route path="/" component={RouteGuard}>
+              <Route path="/home" component={HomePage} />
+            </Route>
+            <Route path="*" component={() => <div>Page Not found!!!</div>} />
           </Routes>
         </Show>
       </main>
