@@ -6,7 +6,7 @@
   "scripts": {
     "dev:build": "tsc -w",
     "dev:run": "nodemon build/index.js",
-    "dev": "concurrently \"npm run dev:build\" \"npm run dev:run\"",
+    "dev": "npm run dev:build & npm run dev:run",
     "test": "jest --watch",
     "db:migrate": "npx prisma migrate dev --name init",
     "db:reset": "npx prisma migrate reset -f",
@@ -39,7 +39,6 @@
     "@types/node": "^20.10.5",
     "@types/passport": "^1.0.16",
     "@types/passport-google-oauth20": "^2.0.14",
-    "concurrently": "^8.2.2",
     "nodemon": "^3.0.2",
     "prisma": "^5.7.1",
     "ts-node": "^10.9.2",
