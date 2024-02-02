@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import passport from "passport";
 import { AUTH_STRATEGY } from "./types";
 import { User } from "@prisma/client";
@@ -10,7 +10,7 @@ type UserForClient = Pick<
 
 export const authWithGoogle = passport.authenticate(AUTH_STRATEGY.Google, {
   failureRedirect: "/failure",
-  successRedirect: `${process.env.CLIENT_ORIGIN}/home`,
+  successRedirect: `${process.env.CLIENT_ORIGIN}/`,
 });
 
 export const handleGoogleCallbackSuccess = (req: Request, res: Response) => {
@@ -26,7 +26,7 @@ export const redirectToGoogleLogin = passport.authenticate(
   { scope: ["profile", "email"] }
 );
 
-export const logout = (req: Request, res: Response, next: NextFunction) => {
+export const logout = (req: Request, res: Response) => {
   res.clearCookie("connect.sid");
   req.logout((err) => {
     if (err) {
