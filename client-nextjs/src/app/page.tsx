@@ -3,8 +3,11 @@ import { authOptions, loginIsRequiredServer } from "../utils/auth";
 import { Note, User } from "@prisma/client";
 import { prisma } from "@/prisma/db";
 import { redirect } from "next/navigation";
+import AddNewNoteForm from "@/components/AddNewNoteForm";
+import NotesList from "@/components/NotesList";
 
 const fetchNotesByUserId = async (userId: User["id"]): Promise<Note[]> => {
+  "use server";
   try {
     const notes: Note[] = await prisma.note.findMany({
       where: { authorId: userId },
@@ -27,7 +30,10 @@ export default async function Home() {
 
   return (
     <main>
-      <h3>This is your email: {session?.user?.email}</h3>
+      <div className="text-center">
+        <AddNewNoteForm user={session.user} />
+        <NotesList notes={notes} />
+      </div>
     </main>
   );
 }

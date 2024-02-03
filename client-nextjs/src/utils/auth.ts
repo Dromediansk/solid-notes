@@ -17,6 +17,7 @@ const createUserFromGoogleProfile = async (profile: AuthProfile) => {
     },
     update: {},
     create: {
+      id: profile.sub,
       firstName: profile.given_name || "",
       lastName: profile.last_name || "",
       email: profile.email || "",

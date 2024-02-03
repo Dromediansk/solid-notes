@@ -4,7 +4,10 @@ export type Note = {
   id: string;
   text: string;
   createdAt: Date;
+  authorId: string;
 };
+
+export type CreateNoteBody = Pick<Note, "authorId" | "text">;
 
 export type User = {
   id: string;
