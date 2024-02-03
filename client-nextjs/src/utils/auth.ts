@@ -10,6 +10,15 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_SECRET as string,
     }),
   ],
+  session: {
+    maxAge: 86400000, // 1 day
+  },
+  callbacks: {
+    async signIn({ user, account, profile, email, credentials }) {
+      console.log("account", account);
+      return true;
+    },
+  },
 };
 
 export async function loginIsRequiredServer() {
