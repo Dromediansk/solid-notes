@@ -3,13 +3,27 @@ import { prisma } from "./db";
 
 async function main() {
   console.log(`Start seeding ...`);
-  testUsers.forEach(async (user) => {
-    await prisma.user.create({ data: user });
-  });
+  // Users
+  await Promise.all(
+    testUsers.map(async (user) =>
+      prisma.user.upsert({
+        where: { id: user.id },
+        update: {},
+        create: user,
+      })
+    )
+  );
 
-  testNotes.forEach(async (note) => {
-    await prisma.note.create({ data: note });
-  });
+  // Notes
+  await Promise.all(
+    testNotes.map(async (note) =>
+      prisma.note.upsert({
+        where: { id: note.id },
+        update: {},
+        create: note,
+      })
+    )
+  );
 
   console.log("Data added successfully!");
 }

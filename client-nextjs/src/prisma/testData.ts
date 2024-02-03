@@ -20,19 +20,19 @@ export const testUsers: User[] = [
 export const testNotes: Note[] = [
   {
     id: "1",
-    userId: testUsers[0].id,
+    authorId: testUsers[0].id,
     text: "Testing note 1",
     createdAt: new Date(),
   },
   {
     id: "2",
-    userId: testUsers[0].id,
+    authorId: testUsers[0].id,
     text: "Lorem ipsum how are you",
     createdAt: new Date(),
   },
   {
     id: "3",
-    userId: testUsers[1].id,
+    authorId: testUsers[1].id,
     text: "Testing note 3",
     createdAt: new Date(),
   },
