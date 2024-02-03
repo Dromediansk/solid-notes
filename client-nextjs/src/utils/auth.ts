@@ -1,22 +1,54 @@
+import { prisma } from "@/prisma/db";
+import { User } from "@prisma/client";
 import { NextAuthOptions, getServerSession } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { useSession } from "next-auth/react";
 import { redirect, useRouter } from "next/navigation";
+import { AuthProfile } from "./types";
+
+if (!process.env.GOOGLE_ID || !process.env.GOOGLE_SECRET) {
+  throw new Error("Missing credentials for Google auth!");
+}
+
+const createUserFromGoogleProfile = async (profile: AuthProfile) => {
+  const prismaUser = await prisma.user.upsert({
+    where: {
+      googleId: profile.sub,
+      email: profile.email,
+    },
+    update: {},
+    create: {
+      googleId: profile.sub || "",
+      firstName: profile.given_name || "",
+      lastName: profile.last_name || "",
+      email: profile.email || "",
+    },
+  });
+  return prismaUser;
+};
 
 export const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_ID as string,
-      clientSecret: process.env.GOOGLE_SECRET as string,
+      clientId: process.env.GOOGLE_ID,
+      clientSecret: process.env.GOOGLE_SECRET,
     }),
   ],
   session: {
     maxAge: 86400000, // 1 day
   },
   callbacks: {
-    async signIn({ user, account, profile, email, credentials }) {
-      console.log("account", account);
-      return true;
+    async signIn({ profile }) {
+      if (!profile) {
+        return false;
+      }
+      try {
+        await createUserFromGoogleProfile(profile as AuthProfile);
+        return true;
+      } catch (err) {
+        console.log("Error signing in user: ", err);
+        return false;
+      }
     },
   },
 };

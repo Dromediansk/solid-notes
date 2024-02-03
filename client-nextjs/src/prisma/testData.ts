@@ -7,6 +7,7 @@ export const testUsers: User[] = [
     lastName: "Hatay",
     email: "test@test.com",
     googleId: "123",
+    registeredAt: new Date(),
   },
   {
     id: "2",
@@ -14,6 +15,7 @@ export const testUsers: User[] = [
     lastName: "Mitas",
     email: "test2@test.com",
     googleId: "223",
+    registeredAt: new Date(),
   },
 ];
 

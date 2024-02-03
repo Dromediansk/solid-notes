@@ -1,3 +1,5 @@
+import { Profile } from "next-auth";
+
 export type Note = {
   id: string;
   text: string;
@@ -12,3 +14,8 @@ export type User = {
 };
 
 export type NoteByDate = { [key: string]: Note[] };
+
+export type AuthProfile = Profile & {
+  given_name: string;
+  last_name: string;
+};
