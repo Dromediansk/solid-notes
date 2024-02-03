@@ -1,5 +1,5 @@
 import { useAuthSession } from "@/utils/auth";
-import SignOutButton from "./SignOutButton";
+import SignOutButton from "./auth/SignOutButton";
 
 const Navbar = async () => {
   const session = await useAuthSession();

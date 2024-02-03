@@ -1,4 +1,4 @@
-import GoogleSignInButton from "@/components/GoogleSignInButton";
+import GoogleSignInButton from "@/components/auth/GoogleSignInButton";
 import { useAuthSession } from "../../utils/auth";
 import { redirect } from "next/navigation";
 
