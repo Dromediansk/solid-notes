@@ -1,12 +1,14 @@
-import { fetchAuthStatus } from "@/services/auth";
-import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
+import { authOptions, loginIsRequiredServer } from "../utils/auth";
 
 export default async function Home() {
-  const auth = await fetchAuthStatus();
+  await loginIsRequiredServer();
 
-  if (!auth.user) {
-    redirect("/login");
-  }
+  const session = await getServerSession(authOptions);
 
-  return <main>Hello</main>;
+  return (
+    <main>
+      <h3>This is your email: {session?.user?.email}</h3>
+    </main>
+  );
 }

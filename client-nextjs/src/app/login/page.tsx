@@ -1,10 +1,20 @@
-import GoogleSignInForm from "@/components/GoogleSignInForm";
+import GoogleSignInButton from "@/components/GoogleSignInButton";
+import { useAuthSession } from "../../utils/auth";
+import { redirect } from "next/navigation";
 
-const LoginPage = () => {
+const LoginPage = async () => {
+  const session = await useAuthSession();
+
+  if (session) {
+    return redirect("/");
+  }
+
   return (
-    <div>
-      <h3 className="text-xl text-center py-6">Welcome in Solid Notes!</h3>
-      <GoogleSignInForm />
+    <div className="text-center">
+      <h3 className="text-xl py-6">Welcome in Solid Notes!</h3>
+      <div className="flex justify-center">
+        <GoogleSignInButton />
+      </div>
     </div>
   );
 };

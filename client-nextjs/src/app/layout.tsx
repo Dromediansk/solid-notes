@@ -1,14 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import Navigation from "@/components/navigation/Navigation";
 import "./globals.css";
 import { FC, ReactNode } from "react";
+import Navbar from "@/components/Navbar";
 
 type RootLayoutProps = {
   children: ReactNode;
 };
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,8 +15,8 @@ export const metadata: Metadata = {
 const RootLayout: FC<RootLayoutProps> = ({ children }) => {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Navigation />
+      <body className="bg-gray-100">
+        <Navbar />
         {children}
       </body>
     </html>
