@@ -12,10 +12,9 @@ datasource db {
 
 model User {
   id           String   @id @default(uuid())
-  firstName    String
+  firstName     String
   lastName     String
   email        String
-  googleId     String   @unique
   registeredAt DateTime @default(now())
   Note         Note[]
 }
