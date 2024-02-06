@@ -10,12 +10,10 @@ type NotesListProps = {
 
 const NotesList: FC<NotesListProps> = ({ notes }) => {
   return (
-    <div className="p-5">
-      <ul className="flex gap-2 flex-wrap justify-center">
-        {notes.map((note) => (
-          <StickyNote key={note.id} note={note} />
-        ))}
-      </ul>
+    <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-6 my-4">
+      {notes.map((note) => (
+        <StickyNote key={note.id} note={note} />
+      ))}
     </div>
   );
 };

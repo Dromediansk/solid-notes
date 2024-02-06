@@ -23,17 +23,20 @@ export const testNotes: Note[] = [
     authorId: testUsers[0].id,
     text: "Testing note 1",
     createdAt: new Date(),
+    orderNumber: 1,
   },
   {
     id: "2",
     authorId: testUsers[0].id,
     text: "Lorem ipsum how are you",
     createdAt: new Date(),
+    orderNumber: 2,
   },
   {
     id: "3",
     authorId: testUsers[1].id,
     text: "Testing note 3",
     createdAt: new Date(),
+    orderNumber: 1,
   },
 ];

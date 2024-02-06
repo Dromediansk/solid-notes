@@ -6,12 +6,14 @@ import { DefaultUser } from "next-auth";
 
 export const createNoteInDb = async (
   inputValue: string,
-  userId: DefaultUser["id"]
+  userId: DefaultUser["id"],
+  orderNumber: number
 ) => {
   try {
     const newNote: CreateNoteBody = {
       text: inputValue,
       authorId: userId,
+      orderNumber,
     };
 
     await prisma.note.create({

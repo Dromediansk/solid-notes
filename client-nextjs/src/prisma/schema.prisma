@@ -12,7 +12,7 @@ datasource db {
 
 model User {
   id           String   @id @default(uuid())
-  firstName     String
+  firstName    String
   lastName     String
   email        String
   registeredAt DateTime @default(now())
@@ -20,9 +20,10 @@ model User {
 }
 
 model Note {
-  id        String   @id @default(uuid())
-  text      String
-  authorId  String
-  author    User     @relation(fields: [authorId], references: [id])
-  createdAt DateTime @default(now())
+  id          String   @id @default(uuid())
+  text        String
+  authorId    String
+  author      User     @relation(fields: [authorId], references: [id])
+  createdAt   DateTime @default(now())
+  orderNumber Int
 }

@@ -29,8 +29,8 @@ export default async function Home() {
   const notes = await fetchNotesByUserId(session.user.id);
 
   return (
-    <main>
-      <div className="text-center">
+    <main className="mx-auto max-w-screen-lg">
+      <div className="text-center my-2 mx-4">
         <AddNewNoteForm user={session.user} />
         <NotesList notes={notes} />
       </div>

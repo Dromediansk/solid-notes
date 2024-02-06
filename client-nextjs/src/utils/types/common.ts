@@ -5,9 +5,10 @@ export type Note = {
   text: string;
   createdAt: Date;
   authorId: string;
+  orderNumber: number;
 };
 
-export type CreateNoteBody = Pick<Note, "authorId" | "text">;
+export type CreateNoteBody = Pick<Note, "authorId" | "text" | "orderNumber">;
 
 export type User = {
   id: string;

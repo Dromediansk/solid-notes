@@ -17,7 +17,7 @@ const AddNewNoteForm: FC<AddNewNoteFormProps> = ({ user }) => {
     try {
       setIsLoading(true);
 
-      await createNoteInDb(inputValue, user.id);
+      await createNoteInDb(inputValue, user.id, 1);
       setInputValue("");
       router.refresh();
     } catch (error) {
@@ -34,7 +34,7 @@ const AddNewNoteForm: FC<AddNewNoteFormProps> = ({ user }) => {
     >
       <textarea
         className="w-96 h-24 bg-gray-50 text-gray-900 text-sm rounded-md p-2 resize focus:outline-cyan-500"
-        placeholder="Write a note"
+        placeholder="What did you learn today?"
         name="body"
         value={inputValue}
         onChange={(event) => setInputValue(event.currentTarget.value)}
