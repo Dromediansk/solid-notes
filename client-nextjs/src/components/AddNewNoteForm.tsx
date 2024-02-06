@@ -2,7 +2,7 @@
 import { createNoteInDb } from "@/services/notes";
 import { DefaultUser } from "next-auth";
 import { useRouter } from "next/navigation";
-import { FC, FormEventHandler, SyntheticEvent, useState } from "react";
+import { FC, SyntheticEvent, useState } from "react";
 
 type AddNewNoteFormProps = {
   user: DefaultUser;
