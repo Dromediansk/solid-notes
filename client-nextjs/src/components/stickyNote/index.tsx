@@ -13,7 +13,7 @@ const StickyNote: FC<StickyNoteProps> = ({ note }) => {
 
   return (
     <>
-      <div className="gap-4 shadow-md rounded z-10 flex flex-col justify-between group">
+      <div className="gap-4 shadow-md rounded flex flex-col justify-between group">
         <p
           title={note.text}
           className="max-w-sm text-center m-4 mb-0 line-clamp-3"
@@ -23,9 +23,11 @@ const StickyNote: FC<StickyNoteProps> = ({ note }) => {
         </p>
         <StickyNoteFooter noteId={note.id} setDialogOpen={setDialogOpen} />
       </div>
-      {dialogOpen && (
-        <StickyNoteDialog note={note} setDialogOpen={setDialogOpen} />
-      )}
+      <StickyNoteDialog
+        note={note}
+        dialogOpen={dialogOpen}
+        setDialogOpen={setDialogOpen}
+      />
     </>
   );
 };
