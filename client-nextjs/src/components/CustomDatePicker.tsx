@@ -5,21 +5,24 @@ import { RouteParams } from "@/utils/types/common";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import DatePicker from "tailwind-datepicker-react";
-import { IDatePickerProps } from "tailwind-datepicker-react/types/Components/DatePicker";
+import { IOptions } from "tailwind-datepicker-react/types/Options";
 
-const options: IDatePickerProps["options"] = {
+const options: IOptions = {
   clearBtn: false,
+  weekDays: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
+  language: "en-UK",
   theme: {
-    background: "",
-    todayBtn: "bg-emerald-500 hover:bg-emerald-600",
+    background: "bg-white",
+    todayBtn:
+      "bg-emerald-500 hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-600",
     clearBtn: "",
     icons: "",
-    text: "",
+    text: "text-gray-500",
     disabledText: "",
     input:
       "border-2 border-gray-200 shadow-sm rounded focus:outline-emerald-500",
     inputIcon: "",
-    selected: "bg-emerald-500 hover:bg-emerald-600",
+    selected: "bg-emerald-500 hover:bg-emerald-700",
   },
   datepickerClassNames: "top-50",
 };
