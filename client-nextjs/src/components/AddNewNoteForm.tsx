@@ -25,11 +25,11 @@ const AddNewNoteForm: FC<AddNewNoteFormProps> = ({ user }) => {
 
   return (
     <form
-      className="inline-flex justify-center items-center border-2 border-gray-200 shadow-sm"
+      className="inline-flex justify-center items-center border-2 border-gray-200 shadow-sm w-full sm:w-96"
       onSubmit={handleAddNote}
     >
       <input
-        className="w-96 h-10 bg-gray-50 text-gray-900 text-sm rounded p-2 resize focus:outline-emerald-500"
+        className="w-full sm:w-96 h-10 bg-gray-50 text-gray-900 text-sm rounded p-4 resize focus:outline-emerald-500"
         placeholder="What did you learn today?"
         name="body"
         value={inputValue}

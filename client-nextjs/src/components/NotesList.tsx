@@ -10,7 +10,7 @@ type NotesListProps = {
 
 const NotesList: FC<NotesListProps> = ({ notes }) => {
   return (
-    <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-6 my-4">
+    <div className="grid sm:grid-cols-2 md:grid-cols-4 justify-center gap-6 my-4">
       {notes.map((note) => (
         <StickyNote key={note.id} note={note} />
       ))}

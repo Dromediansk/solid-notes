@@ -1,4 +1,4 @@
-import { FC, Fragment, useRef, useState } from "react";
+import { FC, FocusEvent, Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import StickyNoteFooter from "./StickyNoteFooter";
 import { Note } from "@prisma/client";
@@ -29,6 +29,16 @@ const StickyNoteDialog: FC<StickyNoteDialogProps> = ({
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleFocus = ({
+    currentTarget,
+  }: FocusEvent<HTMLTextAreaElement, Element>) => {
+    currentTarget.setSelectionRange(
+      currentTarget.value.length,
+      currentTarget.value.length
+    );
+    currentTarget.scrollTop = currentTarget.scrollHeight;
   };
 
   return (
@@ -62,8 +72,8 @@ const StickyNoteDialog: FC<StickyNoteDialogProps> = ({
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all w-full max-w-lg">
-                <div className="text-center bg-white p-4">
+              <Dialog.Panel className="relative transform rounded-lg bg-white text-left shadow-xl transition-all w-full max-w-2xl">
+                <div className="text-center bg-white p-4 rounded-lg">
                   {/* <Dialog.Title
                       as="h3"
                       className="text-base font-semibold leading-6 text-gray-900"
@@ -72,19 +82,24 @@ const StickyNoteDialog: FC<StickyNoteDialogProps> = ({
                     </Dialog.Title> */}
                   <div className="mt-2 h-fit">
                     <textarea
-                      className="text-sm text-gray-500 w-full h-60 p-2"
+                      className="text-sm text-gray-500 w-full h-96 sm:h-[70vh] p-2"
                       value={inputValue}
                       onChange={(event) =>
                         setInputValue(event.currentTarget.value)
                       }
                       ref={inputRef}
+                      onFocus={handleFocus}
                     />
                   </div>
                 </div>
-                <StickyNoteFooter
-                  noteId={note.id}
-                  setDialogOpen={setDialogOpen}
-                />
+                <div className="p-2 text-right">
+                  <button
+                    className="hover:bg-gray-200 px-4 py-2 transition duration-300 rounded"
+                    onClick={handleClose}
+                  >
+                    Close
+                  </button>
+                </div>
               </Dialog.Panel>
             </Transition.Child>
           </div>
