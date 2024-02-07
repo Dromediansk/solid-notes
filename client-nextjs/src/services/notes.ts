@@ -32,6 +32,7 @@ export const updateNoteInDb = async (noteId: string, inputValue: string) => {
       where: { id: noteId },
       data: {
         text: inputValue,
+        updatedAt: new Date(),
       },
     });
   } catch (error) {

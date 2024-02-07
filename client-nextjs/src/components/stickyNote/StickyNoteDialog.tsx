@@ -1,6 +1,5 @@
 import { FC, FocusEvent, Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import StickyNoteFooter from "./StickyNoteFooter";
 import { Note } from "@prisma/client";
 import { updateNoteInDb } from "@/services/notes";
 import { useRouter } from "next/navigation";
@@ -9,6 +8,16 @@ type StickyNoteDialogProps = {
   note: Note;
   dialogOpen: boolean;
   setDialogOpen: (state: boolean) => void;
+};
+
+const determineDialogSizeByTextLength = (textLength: number) => {
+  if (textLength >= 2000) {
+    return "h-[60vh]";
+  }
+  if (textLength <= 300) {
+    return "h-[10vh]";
+  }
+  return "h-[30vh]";
 };
 
 const StickyNoteDialog: FC<StickyNoteDialogProps> = ({
@@ -20,6 +29,8 @@ const StickyNoteDialog: FC<StickyNoteDialogProps> = ({
 
   const router = useRouter();
   const inputRef = useRef(null);
+
+  const textLength = note.text.length;
 
   const handleClose = async () => {
     try {
@@ -82,7 +93,9 @@ const StickyNoteDialog: FC<StickyNoteDialogProps> = ({
                     </Dialog.Title> */}
                   <div className="mt-2 h-fit">
                     <textarea
-                      className="text-sm text-gray-500 w-full h-96 sm:h-[70vh] p-2"
+                      className={`text-sm text-gray-500 p-2 w-full ${determineDialogSizeByTextLength(
+                        textLength
+                      )}`}
                       value={inputValue}
                       onChange={(event) =>
                         setInputValue(event.currentTarget.value)
