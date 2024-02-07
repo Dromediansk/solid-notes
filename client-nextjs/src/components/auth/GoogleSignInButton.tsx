@@ -15,7 +15,7 @@ export function GoogleSignInButton() {
       className="flex items-center font-semibold justify-center h-14 px-6 my-4 text-lg  transition-colors duration-300 bg-white border-2 border-gray-200 text-black rounded-lg focus:shadow-outline hover:bg-slate-200"
     >
       <Image src={googleLogo} alt="Google Logo" width={25} height={25} />
-      <span className="ml-4">Sign in</span>
+      <span className="ml-4">Sign in with Google</span>
     </button>
   );
 }
