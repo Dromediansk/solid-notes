@@ -9,6 +9,15 @@ type StickyNotesListProps = {
 };
 
 const StickyNotesList: FC<StickyNotesListProps> = ({ notes }) => {
+  if (notes.length === 0) {
+    return (
+      <p className="text-center text-gray-500">
+        Oops! Your notes seem to be on vacation. <br /> Time to break the
+        silence with a new note!
+      </p>
+    );
+  }
+
   return (
     <div className="grid sm:grid-cols-2 md:grid-cols-4 justify-center gap-6 my-4">
       {notes.map((note) => (
