@@ -5,11 +5,11 @@ import { DefaultUser } from "next-auth";
 import { useParams, useRouter } from "next/navigation";
 import { FC, SyntheticEvent, useState } from "react";
 
-type AddNewNoteFormProps = {
+type CreateNoteFormProps = {
   user: DefaultUser;
 };
 
-const AddNewNoteForm: FC<AddNewNoteFormProps> = ({ user }) => {
+const CreateNoteForm: FC<CreateNoteFormProps> = ({ user }) => {
   const [inputValue, setInputValue] = useState("");
   const router = useRouter();
   const params = useParams<RouteParams>();
@@ -42,4 +42,4 @@ const AddNewNoteForm: FC<AddNewNoteFormProps> = ({ user }) => {
   );
 };
 
-export default AddNewNoteForm;
+export default CreateNoteForm;

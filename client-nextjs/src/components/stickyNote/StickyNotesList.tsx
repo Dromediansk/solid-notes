@@ -2,13 +2,13 @@
 
 import { Note } from "@prisma/client";
 import { FC } from "react";
-import StickyNote from "./stickyNote";
+import StickyNote from ".";
 
-type NotesListProps = {
+type StickyNotesListProps = {
   notes: Note[];
 };
 
-const NotesList: FC<NotesListProps> = ({ notes }) => {
+const StickyNotesList: FC<StickyNotesListProps> = ({ notes }) => {
   return (
     <div className="grid sm:grid-cols-2 md:grid-cols-4 justify-center gap-6 my-4">
       {notes.map((note) => (
@@ -18,4 +18,4 @@ const NotesList: FC<NotesListProps> = ({ notes }) => {
   );
 };
 
-export default NotesList;
+export default StickyNotesList;

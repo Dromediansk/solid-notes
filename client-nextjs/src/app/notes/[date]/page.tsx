@@ -1,4 +1,4 @@
-import NotesList from "@/components/NotesList";
+import NotesList from "@/components/stickyNote/StickyNotesList";
 import { fetchNotesByDate } from "@/services/notes";
 import { authOptions } from "@/utils/auth";
 import { getServerSession } from "next-auth";

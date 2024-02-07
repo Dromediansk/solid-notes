@@ -1,4 +1,4 @@
-import AddNewNoteForm from "./AddNewNoteForm";
+import AddNewNoteForm from "./CreateNewNoteForm";
 import CustomDatePicker from "./CustomDatePicker";
 import { useAuthSession } from "@/utils/auth";
 import { redirect } from "next/navigation";

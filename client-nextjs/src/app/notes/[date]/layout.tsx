@@ -1,4 +1,4 @@
-import FormContainer from "@/components/FormContainer";
+import FormContainer from "@/components/form/FormContainer";
 import { FC, ReactNode } from "react";
 
 type NotesByDateLayoutProps = {

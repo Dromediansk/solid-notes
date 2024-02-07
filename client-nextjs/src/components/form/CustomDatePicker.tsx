@@ -24,7 +24,7 @@ const options: IOptions = {
     inputIcon: "",
     selected: "bg-emerald-500 hover:bg-emerald-700",
   },
-  datepickerClassNames: "top-50",
+  datepickerClassNames: "top-50 left-[15%] sm:left-[30%]",
 };
 
 const CustomDatePicker = () => {
