@@ -24,7 +24,7 @@ model Note {
   text        String
   authorId    String
   author      User     @relation(fields: [authorId], references: [id])
-  createdAt   DateTime @default(now())
+  createdAt   DateTime @default(now())   
   updatedAt   DateTime @default(now())
   orderNumber Int
 }

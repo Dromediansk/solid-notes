@@ -2,17 +2,38 @@
 
 import { prisma } from "@/prisma/db";
 import { CreateNoteBody } from "@/utils/types/common";
+import { Note, User } from "@prisma/client";
 import { DefaultUser } from "next-auth";
+
+export const fetchNotesByDate = async (
+  userId: User["id"],
+  date: string
+): Promise<Note[]> => {
+  try {
+    const notes: Note[] = await prisma.note.findMany({
+      where: {
+        authorId: userId,
+        createdAt: { lte: new Date(date), gte: new Date(date) },
+      },
+      orderBy: { createdAt: "asc" },
+    });
+    return notes;
+  } catch (error) {
+    throw new Error(`Error fetching notes: ${error}`);
+  }
+};
 
 export const createNoteInDb = async (
   inputValue: string,
   userId: DefaultUser["id"],
+  createdAt: string,
   orderNumber: number
 ) => {
   try {
     const newNote: CreateNoteBody = {
       text: inputValue,
       authorId: userId,
+      createdAt: new Date(createdAt),
       orderNumber,
     };
 
