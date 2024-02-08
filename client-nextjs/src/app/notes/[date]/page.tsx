@@ -12,7 +12,7 @@ const Page: FC<PageProps> = async ({ params }) => {
   const session = await getServerSession(authOptions);
 
   if (!session || !session.user) {
-    throw new Error("Session not available!");
+    return null;
   }
   const notes = await fetchNotesByDate(session.user?.id, params.date);
 

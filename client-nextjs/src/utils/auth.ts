@@ -18,21 +18,27 @@ const createUserFromOAuthProvider = async (
   profile: AuthProfile,
   user: User
 ) => {
-  const userId = profile.sub || user.id;
-  const prismaUser = await prisma.user.upsert({
-    where: {
-      id: userId,
-      email: profile.email,
-    },
-    update: {},
-    create: {
-      id: userId,
-      firstName: profile.given_name || "",
-      lastName: profile.last_name || "",
-      email: profile.email || user.email || "",
-    },
-  });
-  return prismaUser;
+  try {
+    const userEmail = profile.email || user.email;
+    if (userEmail) {
+      const prismaUser = await prisma.user.upsert({
+        where: {
+          email: userEmail,
+        },
+        update: {},
+        create: {
+          firstName: profile.given_name || "",
+          lastName: profile.last_name || "",
+          email: userEmail,
+        },
+      });
+      return prismaUser;
+    } else {
+      throw new Error("Email of the user is not specified!");
+    }
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const authOptions: NextAuthOptions = {
@@ -62,8 +68,22 @@ export const authOptions: NextAuthOptions = {
         return false;
       }
     },
-    async session({ session, token }) {
-      return { user: { ...session.user, id: token.sub } } as Session;
+    async session({ session }) {
+      if (!session.user?.email) {
+        throw new Error("Missing user e-mail!");
+      }
+      try {
+        const user = await prisma.user.findFirst({
+          where: { email: session.user.email },
+        });
+        if (!user) {
+          throw new Error("User not found!");
+        }
+        return { user: { ...session.user, id: user.id } } as Session;
+      } catch (error) {
+        console.log(error);
+        return { user: undefined } as Session;
+      }
     },
   },
 };
