@@ -93,8 +93,9 @@ const StickyNoteDialog: FC<StickyNoteDialogProps> = ({
                   <div className="h-fit">
                     <CustomEditor
                       markdown={inputValue}
-                      onChange={(value) => setInputValue(value)}
+                      onChange={setInputValue}
                       autoFocus
+                      ref={inputRef}
                     />
                   </div>
                 </div>

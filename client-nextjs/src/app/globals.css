@@ -7,4 +7,7 @@
   textarea {
     @apply focus:outline-main bg-gray-50;
   }
+  button {
+    @apply focus:outline-main;
+  }
 }

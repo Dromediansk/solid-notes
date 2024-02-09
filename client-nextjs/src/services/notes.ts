@@ -15,7 +15,7 @@ export const fetchNotesByDate = async (
         authorId: userId,
         createdAt: { lte: new Date(date), gte: new Date(date) },
       },
-      orderBy: { createdAt: "asc" },
+      orderBy: { updatedAt: "desc" },
     });
     return notes;
   } catch (error) {
