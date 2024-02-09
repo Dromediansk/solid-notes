@@ -1,8 +1,9 @@
 import { FC, FocusEvent, Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Note } from "@prisma/client";
-import { updateNoteInDb } from "@/services/notes";
+import { deleteNoteInDb, updateNoteInDb } from "@/services/notes";
 import { useRouter } from "next/navigation";
+import { CustomEditor } from "../editor";
 
 type StickyNoteDialogProps = {
   note: Note;
@@ -12,12 +13,12 @@ type StickyNoteDialogProps = {
 
 const determineDialogSizeByTextLength = (textLength: number) => {
   if (textLength >= 2000) {
-    return "h-[60vh]";
+    return "h-[70vh]";
   }
   if (textLength <= 300) {
-    return "h-[10vh]";
+    return "h-[15vh]";
   }
-  return "h-[30vh]";
+  return "h-[40vh]";
 };
 
 const StickyNoteDialog: FC<StickyNoteDialogProps> = ({
@@ -34,7 +35,9 @@ const StickyNoteDialog: FC<StickyNoteDialogProps> = ({
 
   const handleClose = async () => {
     try {
-      if (inputValue !== note.text) {
+      if (!inputValue) {
+        await deleteNoteInDb(note.id);
+      } else if (inputValue !== note.text) {
         await updateNoteInDb(note.id, inputValue);
       }
       setDialogOpen(false);
@@ -44,6 +47,7 @@ const StickyNoteDialog: FC<StickyNoteDialogProps> = ({
     }
   };
 
+  // TODO: Apply on MDX Editor
   const handleFocus = ({
     currentTarget,
   }: FocusEvent<HTMLTextAreaElement, Element>) => {
@@ -56,12 +60,7 @@ const StickyNoteDialog: FC<StickyNoteDialogProps> = ({
 
   return (
     <Transition.Root show={dialogOpen} as={Fragment}>
-      <Dialog
-        as="div"
-        className="relative z-10"
-        initialFocus={inputRef}
-        onClose={handleClose}
-      >
+      <Dialog as="div" className="relative z-10" onClose={handleClose}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -86,24 +85,16 @@ const StickyNoteDialog: FC<StickyNoteDialogProps> = ({
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <Dialog.Panel className="relative transform rounded-lg bg-white text-left shadow-xl transition-all w-full max-w-2xl">
-                <div className="text-center bg-white p-4 rounded-lg">
-                  {/* <Dialog.Title
-                      as="h3"
-                      className="text-base font-semibold leading-6 text-gray-900"
-                    >
-                      Title
-                    </Dialog.Title> */}
-                  <div className="mt-2 h-fit">
-                    <textarea
-                      className={`text-sm p-2 w-full ${determineDialogSizeByTextLength(
-                        textLength
-                      )}`}
-                      value={inputValue}
-                      onChange={(event) =>
-                        setInputValue(event.currentTarget.value)
-                      }
-                      ref={inputRef}
-                      onFocus={handleFocus}
+                <div
+                  className={`text-center bg-white px-4 rounded-lg overflow-auto ${determineDialogSizeByTextLength(
+                    textLength
+                  )}`}
+                >
+                  <div className="h-fit">
+                    <CustomEditor
+                      markdown={inputValue}
+                      onChange={(value) => setInputValue(value)}
+                      autoFocus
                     />
                   </div>
                 </div>

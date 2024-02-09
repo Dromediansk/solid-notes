@@ -37,6 +37,7 @@ const CreateNoteForm: FC<CreateNoteFormProps> = ({ user }) => {
         value={inputValue}
         onChange={(event) => setInputValue(event.currentTarget.value)}
         required
+        autoFocus
       />
     </form>
   );

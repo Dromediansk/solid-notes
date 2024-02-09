@@ -17,12 +17,14 @@
   "dependencies": {
     "@headlessui/react": "^1.7.18",
     "@heroicons/react": "^2.1.1",
+    "@mdxeditor/editor": "^2.8.3",
     "@prisma/client": "^5.9.1",
     "dayjs": "^1.11.10",
     "next": "14.1.0",
     "next-auth": "^4.24.5",
     "react": "^18",
     "react-dom": "^18",
+    "react-markdown": "^9.0.1",
     "tailwind-datepicker-react": "^1.4.3"
   },
   "devDependencies": {

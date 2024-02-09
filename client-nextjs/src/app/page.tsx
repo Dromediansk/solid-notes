@@ -13,9 +13,9 @@ export default async function Home() {
     return redirect(NOTE_BY_CURRENT_DATE_ROUTE);
   }
 
-  return (
-    <main className="mx-auto max-w-screen-lg">
-      <div className="text-center my-2 mx-4"></div>
-    </main>
-  );
+  // return (
+  //   <main className="mx-auto max-w-screen-lg">
+  //     <div className="text-center my-2 mx-4"></div>
+  //   </main>
+  // );
 }
