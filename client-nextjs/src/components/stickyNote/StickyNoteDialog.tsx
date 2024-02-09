@@ -34,7 +34,9 @@ const StickyNoteDialog: FC<StickyNoteDialogProps> = ({
 
   const handleClose = async () => {
     try {
-      await updateNoteInDb(note.id, inputValue);
+      if (inputValue !== note.text) {
+        await updateNoteInDb(note.id, inputValue);
+      }
       setDialogOpen(false);
       router.refresh();
     } catch (error) {
@@ -93,7 +95,7 @@ const StickyNoteDialog: FC<StickyNoteDialogProps> = ({
                     </Dialog.Title> */}
                   <div className="mt-2 h-fit">
                     <textarea
-                      className={`text-sm text-gray-500 p-2 w-full ${determineDialogSizeByTextLength(
+                      className={`text-sm p-2 w-full ${determineDialogSizeByTextLength(
                         textLength
                       )}`}
                       value={inputValue}

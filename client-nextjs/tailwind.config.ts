@@ -8,7 +8,15 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
     "./node_modules/tailwind-datepicker-react/dist/**/*.js",
   ],
-  theme: {},
+  theme: {
+    extend: {
+      colors: {
+        main: '#10b981',
+        'main-dark': '#065F46',
+        'main-light': '#a7f3d0'
+      }
+    }
+  },
   plugins: [],
   variants: {
     extend: {

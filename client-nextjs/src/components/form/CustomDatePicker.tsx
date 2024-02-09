@@ -20,7 +20,7 @@ const options: IOptions = {
     text: "text-gray-500",
     disabledText: "",
     input:
-      "border-2 border-gray-200 shadow-sm rounded focus:outline-emerald-500",
+      "border-2 border-gray-200 shadow-sm rounded",
     inputIcon: "",
     selected: "bg-emerald-500 hover:bg-emerald-700",
   },

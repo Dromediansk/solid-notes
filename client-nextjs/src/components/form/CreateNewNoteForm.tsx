@@ -31,7 +31,7 @@ const CreateNoteForm: FC<CreateNoteFormProps> = ({ user }) => {
       onSubmit={handleAddNote}
     >
       <input
-        className="w-full sm:w-96 h-10 bg-gray-50 text-gray-900 text-sm rounded p-4 resize focus:outline-emerald-500"
+        className="w-full sm:w-96 h-10 text-gray-900 text-sm rounded p-4 resize"
         placeholder="What did you learn?"
         name="body"
         value={inputValue}
