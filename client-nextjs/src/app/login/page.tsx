@@ -1,14 +1,14 @@
 import GoogleSignInButton from "@/components/auth/GoogleSignInButton";
 import { useAuthSession } from "../../utils/auth";
 import { redirect } from "next/navigation";
-import dayjs from "dayjs";
 import GithubSignInButton from "@/components/auth/GithubSignInButton";
+import { NOTE_BY_CURRENT_DATE_ROUTE } from "@/utils/constants";
 
 const LoginPage = async () => {
   const session = await useAuthSession();
 
   if (session) {
-    return redirect(`notes/${dayjs().format("YYYY-MM-DD")}`);
+    return redirect(NOTE_BY_CURRENT_DATE_ROUTE);
   }
 
   return (

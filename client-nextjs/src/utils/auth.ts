@@ -5,6 +5,7 @@ import GitHubProvider from "next-auth/providers/github";
 import { useSession } from "next-auth/react";
 import { redirect, useRouter } from "next/navigation";
 import { AuthProfile } from "./types/common";
+import { LOGIN_ROUTE } from "./constants";
 
 if (!process.env.GOOGLE_ID || !process.env.GOOGLE_SECRET) {
   throw new Error("Missing environment variables for Google auth!");
@@ -91,7 +92,7 @@ export const authOptions: NextAuthOptions = {
 export async function loginIsRequiredServer() {
   const session = await getServerSession(authOptions);
   if (!session) {
-    return redirect("/login");
+    return redirect(LOGIN_ROUTE);
   }
 }
 
@@ -105,7 +106,7 @@ export function loginIsRequiredClient() {
     const session = useSession();
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const router = useRouter();
-    if (!session) router.push("/login");
+    if (!session) router.push(LOGIN_ROUTE);
   }
 }
 
