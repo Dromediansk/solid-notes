@@ -4,6 +4,7 @@ import { Note } from "@prisma/client";
 import { deleteNoteInDb, updateNoteInDb } from "@/services/notes";
 import { useRouter } from "next/navigation";
 import { CustomEditor } from "../editor";
+import Markdown from "react-markdown";
 
 type StickyNoteDialogProps = {
   note: Note;
@@ -27,6 +28,7 @@ const StickyNoteDialog: FC<StickyNoteDialogProps> = ({
   note,
 }) => {
   const [inputValue, setInputValue] = useState(note.text);
+  const [editMode, setEditMode] = useState(false);
 
   const router = useRouter();
   const inputRef = useRef(null);
@@ -41,6 +43,7 @@ const StickyNoteDialog: FC<StickyNoteDialogProps> = ({
         await updateNoteInDb(note.id, inputValue);
       }
       setDialogOpen(false);
+      setEditMode(false);
       router.refresh();
     } catch (error) {
       console.log(error);
@@ -60,7 +63,7 @@ const StickyNoteDialog: FC<StickyNoteDialogProps> = ({
 
   return (
     <Transition.Root show={dialogOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={handleClose}>
+      <Dialog as="div" className=" z-10" onClose={handleClose}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -86,18 +89,25 @@ const StickyNoteDialog: FC<StickyNoteDialogProps> = ({
             >
               <Dialog.Panel className="relative transform rounded-lg bg-white text-left shadow-xl transition-all w-full max-w-2xl">
                 <div
-                  className={`text-center bg-white px-4 rounded-lg overflow-auto ${determineDialogSizeByTextLength(
+                  className={`text-center bg-white rounded-lg overflow-auto ${determineDialogSizeByTextLength(
                     textLength
                   )}`}
                 >
-                  <div className="h-fit">
+                  {editMode ? (
                     <CustomEditor
                       markdown={inputValue}
                       onChange={setInputValue}
                       autoFocus
                       ref={inputRef}
                     />
-                  </div>
+                  ) : (
+                    <div
+                      onClick={() => setEditMode(true)}
+                      className="text-center w-full p-4 pt-14"
+                    >
+                      <Markdown>{note.text}</Markdown>
+                    </div>
+                  )}
                 </div>
                 <div className="p-2 text-right">
                   <button
