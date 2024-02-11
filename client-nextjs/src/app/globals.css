@@ -10,4 +10,14 @@
   button {
     @apply focus:outline-main;
   }
+  ul,
+  ol {
+    @apply pl-10;
+  }
+  ol {
+    @apply list-decimal;
+  }
+  ul {
+    @apply list-disc;
+  }
 }

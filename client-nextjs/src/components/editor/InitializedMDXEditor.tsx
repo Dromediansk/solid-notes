@@ -8,6 +8,8 @@ import {
   toolbarPlugin,
   BoldItalicUnderlineToggles,
   linkPlugin,
+  ListsToggle,
+  listsPlugin,
 } from "@mdxeditor/editor";
 
 type InitializedMDXEditorProps = MDXEditorProps & {
@@ -25,10 +27,12 @@ const InitializedMDXEditor: FC<InitializedMDXEditorProps> = ({
           toolbarContents: () => (
             <>
               <BoldItalicUnderlineToggles />
+              <ListsToggle />
             </>
           ),
         }),
         linkPlugin(),
+        listsPlugin(),
       ]}
       {...props}
       ref={editorRef}
