@@ -10,6 +10,7 @@ import {
   linkPlugin,
   ListsToggle,
   listsPlugin,
+  CodeToggle,
 } from "@mdxeditor/editor";
 
 type InitializedMDXEditorProps = MDXEditorProps & {
@@ -28,6 +29,7 @@ const InitializedMDXEditor: FC<InitializedMDXEditorProps> = ({
             <>
               <BoldItalicUnderlineToggles />
               <ListsToggle />
+              <CodeToggle />
             </>
           ),
         }),

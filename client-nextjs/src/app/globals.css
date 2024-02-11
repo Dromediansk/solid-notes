@@ -12,12 +12,15 @@
   }
   ul,
   ol {
-    @apply pl-10;
+    @apply px-5;
   }
   ol {
     @apply list-decimal;
   }
   ul {
     @apply list-disc;
+  }
+  code {
+    @apply bg-gray-300;
   }
 }

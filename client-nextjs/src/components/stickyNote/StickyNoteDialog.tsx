@@ -17,7 +17,7 @@ const determineDialogSizeByTextLength = (textLength: number) => {
     return "h-[70vh]";
   }
   if (textLength <= 300) {
-    return "h-[15vh]";
+    return "h-[20vh]";
   }
   return "h-[40vh]";
 };
