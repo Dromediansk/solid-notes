@@ -8,7 +8,7 @@ type NoteTextProps = {
 
 const NoteText: FC<NoteTextProps> = ({ text, onClick }) => {
   return (
-    <div className="text-center m-4 mb-0 line-clamp-3" onClick={onClick}>
+    <div className="text-center m-4 mb-0 line-clamp-5" onClick={onClick}>
       <Markdown>{text}</Markdown>
     </div>
   );

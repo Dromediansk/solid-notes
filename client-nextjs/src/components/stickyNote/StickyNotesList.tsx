@@ -19,7 +19,7 @@ const StickyNotesList: FC<StickyNotesListProps> = ({ notes }) => {
   }
 
   return (
-    <div className="grid sm:grid-cols-2 md:grid-cols-3 justify-center gap-6 my-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 justify-center gap-6 my-4">
       {notes.map((note) => (
         <StickyNote key={note.id} note={note} />
       ))}
