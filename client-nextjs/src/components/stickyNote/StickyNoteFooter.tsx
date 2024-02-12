@@ -44,7 +44,7 @@ const StickyNoteFooter: FC<StickyNoteFooterProps> = ({
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="absolute flex flex-col bg-slate-100 rounded shadow-md">
+          <Menu.Items className="absolute flex flex-col bg-white rounded shadow-md">
             <Menu.Item>
               {({ active }) => (
                 <span
